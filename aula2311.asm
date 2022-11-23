@@ -1,9 +1,9 @@
 .model small
 .stack 100h
 .data
-    str1 db '12345678$'    
-    str2 db qtde dup(?)
     qtde equ 8
+    str1 db '12345678'    
+    str2 db qtde dup(?)
 .code
 
     pulalinha macro  PL ;macro para pular linha
@@ -13,13 +13,13 @@
     endm
 
     main proc
-    mov ax,@data
-    mov ds,ax    ;inicializa ds
-    mov es,ax    ;inicializa ES
-    call inv
-    call imp
-    mov ah,4ch
-    int 21h
+        mov ax,@data
+        mov ds,ax    ;inicializa ds
+        mov es,ax    ;inicializa ES
+        call inv
+        call imp
+        mov ah,4ch
+        int 21h
     main endp
 
     inv proc
@@ -35,5 +35,17 @@
     inv endp
 
     imp proc
+        cld
+        mov cx,qtde
+        lea si,str2
+        mov ah,02
+    imprime:
+        lodsb
+        mov dl,al
+        int 21h 
+        loop imprime
+    ret
+    imp endp
+
 
 end main
